@@ -22,12 +22,10 @@ This project does not claim confirmed fraud detection. It builds a carrier risk 
 | Company Census | https://catalog.data.gov/dataset/company-census-file |
 | Vehicle Inspections | https://catalog.data.gov/dataset/vehicle-inspection-file |
 | Crash File | https://catalog.data.gov/dataset/crash-file |
-| Local Raw Extracts | `C:\Users\prash\projects\bi_projects\datasets\carrier_identity_risk\raw` |
-| Source Manifest | `C:\Users\prash\projects\bi_projects\datasets\_docs\sources.md` |
 | Grain | Carrier-level census, inspection events, crash events |
 | Row Counts | 4.44M carrier records, 8.20M inspection records, 4.94M crash records |
 
-Large raw files are not committed to GitHub. The repository documents the source, schema, SQL logic, EDA plan, and dashboard design.
+Large raw files are not committed to GitHub. Use the official source links above to download the latest data, then place files under `data/raw/` for local analysis.
 
 ## Tools Used
 
@@ -92,4 +90,6 @@ freight_carrier_risk_analytics/
 ## Resume Bullet
 
 Built a carrier risk analytics workflow using FMCSA company census, inspection, and crash data to identify carrier identity gaps, authority status issues, inspection risk, crash history, and data quality exceptions.
+
+
 

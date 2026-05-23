@@ -2,7 +2,7 @@
 
 ## What Changed
 
-- Initial datasets downloaded and source manifest created.
+- Official FMCSA dataset links documented.
 - Project structure and documentation scaffold created.
 
 ## Top Exceptions
@@ -24,4 +24,5 @@
 | Issue | Owner / Team | Priority | Reason |
 |---|---|---|---|
 | Raw data file size | Project team | Medium | Raw extracts are large and should not be committed to GitHub |
+
 
