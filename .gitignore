@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+.ipynb_checkpoints/
+.venv/
+venv/
+
+# Data outputs
+data/raw/*
+data/processed/*
+outputs/cleaned_tables/*
+outputs/sql_exports/*
+outputs/weekly_review/*.xlsx
+
+# Keep folder placeholders
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!outputs/cleaned_tables/.gitkeep
+!outputs/sql_exports/.gitkeep
+!outputs/weekly_review/.gitkeep
+
+# Power BI local/cache files
+*.tmp
+*.bak
+*.pbit
+
