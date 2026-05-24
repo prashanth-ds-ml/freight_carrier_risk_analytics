@@ -37,10 +37,28 @@ As of May 19, 2026, all three source listings were marked as last updated on May
 
 ## Tools Used
 
-- SQL: joins, data quality checks, KPI calculations, risk flag logic
+- SQL: primary analysis workflow for schema inventory, data quality checks, cleaning, KPI calculations, joins, and risk logic
 - Python: EDA, profiling, outlier checks, risk-score exploration
 - Power BI: carrier risk dashboard and DAX measures
 - Excel: exception tracker and weekly review summary
+
+## Current Working Approach
+
+- Raw FMCSA files have been imported into MySQL under `feright_risk_analysis`
+- Current workflow is SQL-first and step-by-step
+- Current completed SQL step: inventory all columns from `raw_company_census`, `raw_crash`, and `raw_vehicle_inspection`
+- Current understanding:
+  - `raw_company_census` is the carrier master table with 147 columns
+  - `raw_crash` is the crash event table with 59 columns
+  - `raw_vehicle_inspection` is the inspection event table with 63 columns
+- Current focus: understand the raw data structure and null patterns before broad cleaning or aggregation
+
+## Current Status Reference
+
+For the most detailed running status, decisions, technical issues, and current BI-layer design, see:
+
+- `docs/current_project_status.md`
+- `docs/analysis_questions.md`
 
 ## Repository Structure
 
@@ -82,6 +100,22 @@ freight_carrier_risk_analytics/
 3. Inspection and Out-of-Service Risk
 4. Crash History
 5. Data Quality Monitor
+
+## Power BI Source Objects
+
+Current recommended MySQL objects for Power BI:
+
+- primary table:
+  - `carrier_risk_summary`
+- supporting summary tables:
+  - `inspection_summary_by_carrier`
+  - `crash_summary_by_carrier`
+- supporting views:
+  - `vw_carrier_profile`
+  - `vw_identity_authority_exceptions`
+  - `vw_inspection_risk`
+  - `vw_crash_risk`
+  - `vw_high_risk_carriers`
 
 ## Key Metrics
 

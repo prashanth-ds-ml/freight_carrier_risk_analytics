@@ -1,6 +1,6 @@
 # Business Problem
 
-Amazon Middle Mile-style freight operations require reliable carrier screening and exception monitoring before freight movements are trusted.
+Freight operations teams require reliable carrier screening and exception monitoring before carriers are trusted for freight movements.
 
 This project builds a carrier risk analytics workflow using FMCSA public datasets to help identify:
 
