@@ -7,7 +7,9 @@ venv/
 # Data outputs
 data/raw/*
 data/processed/*
+data/analysis_data/*
 outputs/cleaned_tables/*
+outputs/profiling/*
 outputs/sql_exports/*
 outputs/weekly_review/*.xlsx
 

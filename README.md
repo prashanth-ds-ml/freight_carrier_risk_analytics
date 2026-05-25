@@ -49,12 +49,18 @@ As of May 19, 2026, all three source listings were marked as last updated on May
 - The current reporting layer uses only Power BI-safe `pbi_*` views
 - The dashboard is designed page-by-page with business-focused sources rather than a single overloaded model
 
-## Current Status Reference
+## Documentation Map
 
-For the most detailed running status, decisions, technical issues, and current BI-layer design, see:
+For detailed supporting documentation, see:
 
-- `docs/current_project_status.md`
+- `docs/business_problem.md`
 - `docs/analysis_questions.md`
+- `docs/data_dictionary.md`
+- `docs/data_quality_report.md`
+- `docs/metric_definitions.md`
+- `docs/insights.md`
+- `docs/recommendations.md`
+- `powerbi/dax_measures.md`
 
 ## Repository Structure
 
@@ -65,27 +71,27 @@ freight_carrier_risk_analytics/
 │   ├── processed/
 │   └── README.md
 ├── docs/
+│   ├── analysis_questions.md
 │   ├── business_problem.md
 │   ├── data_dictionary.md
 │   ├── data_quality_report.md
-│   ├── metric_definitions.md
 │   ├── insights.md
-│   ├── recommendations.md
-│   └── resume_bullets.md
-├── notebooks/
-│   └── 01_eda.ipynb
-├── outputs/
-│   └── weekly_review/
+│   ├── metric_definitions.md
+│   └── recommendations.md
 ├── powerbi/
-│   ├── dax_measures.md
-│   └── screenshots/
+│   └── dax_measures.md
+├── scripts/
+│   ├── import_fmcsa_to_mysql.py
+│   ├── profile_fmcsa_csvs.py
+│   └── run_mysql_script.py
 ├── sql/
-│   ├── 00_schema.sql
-│   ├── 01_data_quality.sql
 │   ├── 02_cleaning.sql
+│   ├── 03_build_summary_tables.sql
 │   ├── 03_kpi_queries.sql
-│   └── 04_deep_dive_queries.sql
-├── PROJECT_LOG.md
+│   ├── 04_deep_dive_queries.sql
+│   ├── 05_analysis_questions.sql
+│   └── 07_powerbi_safe_views.sql
+├── Feright_Risk_Analysis.pdf
 └── README.md
 ```
 
@@ -142,16 +148,6 @@ Internal MySQL build objects that support the reporting layer:
 - `crash_summary_by_carrier`
 - `carrier_risk_summary`
 
-## Page 1 KPIs
-
-The first dashboard page, `Carrier Risk Overview`, uses these core DAX measures on `pbi_carrier_risk_summary`:
-
-- `Total Carriers`
-- `Active Carriers`
-- `Carriers With Inspections`
-- `Carriers With Crashes`
-- `High-Risk Carriers`
-
 All currently used DAX measures are documented in `powerbi/dax_measures.md`.
 
 ## Key Metrics
@@ -165,10 +161,6 @@ All currently used DAX measures are documented in `powerbi/dax_measures.md`.
 - Crash count
 - High-risk carrier count
 - Risk score
-
-## Resume Bullet
-
-Built a carrier risk analytics workflow using FMCSA company census, inspection, and crash data to identify carrier identity gaps, authority status issues, inspection risk, crash history, and data quality exceptions.
 
 
 
