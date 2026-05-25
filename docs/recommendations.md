@@ -11,9 +11,14 @@ Expected recommendation themes:
 
 Current working recommendations based on the first summary build:
 
-- Use `carrier_risk_summary` as the first Power BI source instead of connecting dashboards directly to raw event tables.
+- Do not connect Power BI directly to the raw MySQL tables or raw CSV files.
+- Use the Power BI-safe `pbi_*` MySQL views as the reporting layer.
 - Prioritize review of carriers with `risk_score >= 3`.
 - Separate linked crash analysis from all-crash raw analysis because carrier-level crash metrics depend on available `DOT_NUMBER`.
 - Start dashboarding with carrier-level KPIs and exception views before adding deeper segmentation or coded-field analysis.
-- Use Power BI helper views to simplify dashboard page design and keep field exposure focused by page purpose.
+- Keep each dashboard page tied to one business-focused source:
+  - `pbi_carrier_risk_summary`
+  - `pbi_identity_authority_exceptions`
+  - `pbi_inspection_risk`
+  - `pbi_crash_risk`
 

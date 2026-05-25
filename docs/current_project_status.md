@@ -216,22 +216,7 @@ The following SQL build was created and executed:
 
 This created the following analytical objects.
 
-### 9.1 `company_census_selected`
-
-Type:
-
-- view
-
-Purpose:
-
-- focused carrier-master subset
-- avoids repeatedly working with all 147 census columns
-
-Current row count:
-
-- 4,437,569
-
-### 9.2 `inspection_summary_by_carrier`
+### 9.1 `inspection_summary_by_carrier`
 
 Type:
 
@@ -260,7 +245,7 @@ Interpretation:
 
 - this is the number of carriers with inspection activity linked by `DOT_NUMBER`
 
-### 9.3 `crash_summary_by_carrier`
+### 9.2 `crash_summary_by_carrier`
 
 Type:
 
@@ -291,7 +276,7 @@ Why:
 
 - crash rows without `DOT_NUMBER` cannot be reliably joined back to the carrier master
 
-### 9.4 `carrier_risk_summary`
+### 9.3 `carrier_risk_summary`
 
 Type:
 
@@ -305,11 +290,7 @@ Current row count:
 
 - 4,437,569
 
-This table joins:
-
-- `company_census_selected`
-- `inspection_summary_by_carrier`
-- `crash_summary_by_carrier`
+This table is the integrated carrier-level summary built from selected carrier-master logic plus inspection and crash aggregates.
 
 Join key:
 
@@ -394,6 +375,10 @@ Current important SQL files:
 - `sql/03_build_summary_tables.sql`
 - `sql/03_kpi_queries.sql`
 - `sql/04_deep_dive_queries.sql`
+- `sql/05_analysis_questions.sql`
+- `sql/06_powerbi_helper_views.sql`
+- `sql/07_powerbi_safe_views.sql`
+- `sql/08_drop_legacy_reporting_views.sql`
 
 Purpose of each:
 
@@ -402,7 +387,9 @@ Purpose of each:
 - `03_kpi_queries.sql`: run KPI-level checks against the summary table
 - `04_deep_dive_queries.sql`: run deeper prioritization and segmentation queries
 - `05_analysis_questions.sql`: run the official Workbench-safe version 1 business questions
-- `06_powerbi_helper_views.sql`: create Power BI helper views for page-specific modeling
+- `06_powerbi_helper_views.sql`: create the earlier helper-view reporting layer
+- `07_powerbi_safe_views.sql`: create Power BI-safe reporting views with explicit casts
+- `08_drop_legacy_reporting_views.sql`: remove older reporting/helper views and keep only the final `pbi_*` reporting layer
 
 ## 13. Documentation Updated So Far
 
@@ -433,21 +420,104 @@ A strong interview explanation is:
 
 "I used large public FMCSA carrier, inspection, and crash files as raw source data in MySQL, then built a carrier-level analytical layer with selected carrier-master fields, inspection aggregates, crash aggregates, and transparent risk flags so the output could be used efficiently in Power BI for carrier screening and operational risk monitoring."
 
-## 15. Current Recommended Next Steps
+## 15. Current Dashboard Design
+
+The dashboard is now structured into four business-focused pages.
+
+### Page 1: Carrier Risk Overview
+
+Source:
+
+- `pbi_carrier_risk_summary`
+
+Purpose:
+
+- portfolio-level carrier and risk snapshot
+
+Published page content:
+
+- KPI cards for total carriers, carriers with crashes, carriers with inspections, high-risk carriers, and active carriers
+- carrier status split
+- risk score distribution
+- high-risk carriers by state
+- carrier count by carrier operation
+- top high-risk carriers review table
+
+### Page 2: Identity and Authority Exceptions
+
+Source:
+
+- `pbi_identity_authority_exceptions`
+
+Purpose:
+
+- surface record-quality, authority, and non-active status exceptions
+
+Published page content:
+
+- KPI cards for total exception carriers, missing identity carriers, authority issue carriers, and non-active exception carriers
+- exceptions by state
+- exceptions by status code
+- exceptions by authority status
+- exception review table
+
+### Page 3: Inspection Risk
+
+Source:
+
+- `pbi_inspection_risk`
+
+Purpose:
+
+- show violation and out-of-service concentration for carriers with inspection activity
+
+Published page content:
+
+- KPI cards for carriers with inspection activity, total inspections, total OOS, total violations, high OOS carriers, and high violation carriers
+- inspection risk by state
+- total OOS by state
+- inspection risk by carrier operation
+- high OOS carriers by state
+- inspection review table
+
+### Page 4: Crash Risk
+
+Source:
+
+- `pbi_crash_risk`
+
+Purpose:
+
+- show crash-linked carrier coverage and severity concentration
+
+Published page content:
+
+- KPI cards for crash-linked carriers, total crashes, injury crashes, fatal crashes, tow-away crashes, and federal recordable crashes
+- crash-linked carriers by state
+- injury crashes by state
+- fatal crashes by carrier operation
+- crash-linked carriers by carrier operation
+- crash review table
+
+Reference:
+
+- `powerbi/dax_measures.md`
+
+Published report link:
+
+- https://app.fabric.microsoft.com/view?r=eyJrIjoiNTk3ODRjZjItODJkNy00ZDUzLWJjNDktODUyMjY4YmNhMWZmIiwidCI6IjBkNGYwMzExLWYwMmUtNDE2MS05ZTc4LTg3M2ZmYTk5OWIwOCJ9&pageName=1ab999bf3db81567e975
+
+## 16. Current Recommended Next Steps
 
 The highest-value next steps are:
 
-1. run KPI queries from `sql/03_kpi_queries.sql`
-2. run deeper segmentation queries from `sql/04_deep_dive_queries.sql`
-3. connect Power BI to `carrier_risk_summary`
-4. build the first dashboard pages:
-   - Carrier Risk Overview
-   - Identity and Status Exceptions
-   - Inspection and Crash Risk
-5. capture screenshots and final insights
-6. tighten resume bullet and project summary
+1. publish the Power BI report
+2. capture screenshots for the repo
+3. add the public report link to the documentation
+4. write final insight summaries based on the dashboard outputs
+5. tighten resume bullet and project summary
 
-## 16. Official Analysis Framework
+## 17. Official Analysis Framework
 
 The project now has a fixed version 1 analysis framework with 15 official questions.
 
@@ -468,38 +538,35 @@ Why this matters:
 - it gives the project a stable analytical narrative,
 - it prevents low-value scope creep while building dashboards.
 
-## 17. Power BI View Strategy
+## 18. Power BI View Strategy
 
-The project now includes a Power BI-oriented view strategy in addition to the summary tables.
+The project now includes a Power BI-safe reporting view strategy.
 
-Primary Power BI table:
+Recommended Power BI objects:
 
-- `carrier_risk_summary`
-
-Supporting Power BI tables:
-
-- `inspection_summary_by_carrier`
-- `crash_summary_by_carrier`
-
-Supporting Power BI views:
-
-- `vw_carrier_profile`
-- `vw_identity_authority_exceptions`
-- `vw_inspection_risk`
-- `vw_crash_risk`
-- `vw_high_risk_carriers`
+- `pbi_carrier_risk_summary`
+- `pbi_carrier_profile`
+- `pbi_identity_authority_exceptions`
+- `pbi_inspection_risk`
+- `pbi_crash_risk`
+- `pbi_high_risk_carriers`
 
 Definition script:
 
-- `sql/06_powerbi_helper_views.sql`
+- `sql/07_powerbi_safe_views.sql`
 
 Why this matters:
 
 - views simplify page-specific field selection,
 - they reduce repeated logic inside Power BI,
-- they make the demo and handoff easier.
+- they make the demo and handoff easier,
+- explicit casts reduce MySQL connector type-mismatch issues in Power BI.
 
-## 18. What Was Intentionally Not Done Yet
+Cleanup note:
+
+- older reporting views (`vw_*`) and the earlier `company_census_selected` view were removed from MySQL to keep the reporting layer unambiguous.
+
+## 19. What Was Intentionally Not Done Yet
 
 The following were deliberately deferred:
 
@@ -514,6 +581,6 @@ Why:
 - these tasks were lower-value than building a usable BI model under time pressure
 - they can still be done later if needed
 
-## 19. Current Project State in One Sentence
+## 20. Current Project State in One Sentence
 
 The project has successfully moved from raw FMCSA ingestion to a BI-ready carrier-level MySQL summary model and is ready for KPI analysis and Power BI dashboard development.

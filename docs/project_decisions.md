@@ -151,3 +151,23 @@ Impact:
 
 - helper views are defined in `sql/06_powerbi_helper_views.sql`
 - the main Power BI model can use `carrier_risk_summary` plus focused helper views where helpful
+
+### Decision: Standardize Power BI on `pbi_*` views only
+
+Why:
+
+- the MySQL connector in Power BI produced type-mismatch errors against some earlier objects
+- explicit casts to connector-friendly types are more reliable than using source objects with `mediumtext`, `bigint unsigned`, and wide decimals
+- keeping one reporting layer avoids confusion during dashboard development
+
+Impact:
+
+- Power BI should connect only to:
+  - `pbi_carrier_risk_summary`
+  - `pbi_carrier_profile`
+  - `pbi_identity_authority_exceptions`
+  - `pbi_inspection_risk`
+  - `pbi_crash_risk`
+  - `pbi_high_risk_carriers`
+- the safe-view definition is stored in `sql/07_powerbi_safe_views.sql`
+- older `vw_*` reporting/helper views and `company_census_selected` were removed from MySQL using `sql/08_drop_legacy_reporting_views.sql`

@@ -188,3 +188,14 @@ To keep the analysis easy to run in MySQL Workbench:
 Current primary script:
 
 - `sql/05_analysis_questions.sql`
+
+## Dashboard Alignment
+
+The finalized version 1 dashboard uses the analysis framework in a page-specific way:
+
+- `Carrier Risk Overview` uses `pbi_carrier_risk_summary`
+- `Identity and Authority Exceptions` uses `pbi_identity_authority_exceptions`
+- `Inspection Risk` uses `pbi_inspection_risk`
+- `Crash Risk` uses `pbi_crash_risk`
+
+This keeps each page business-focused and avoids overloading a single page with unrelated fields.

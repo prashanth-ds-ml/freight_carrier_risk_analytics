@@ -34,6 +34,12 @@ Current official analysis framework:
   - integrated carrier-risk analysis
 - this ensures all three source files are used properly in the project story instead of relying on a single summary metric alone
 
+Current published dashboard observations:
+
+- the published report successfully surfaces portfolio-level counts, exception volumes, inspection concentration, and crash concentration across four business-focused pages
+- state-level concentration is a repeated theme across exception, inspection, and crash views, which is appropriate for carrier monitoring and operational review
+- carrier-operation segmentation appears in overview, inspection, and crash pages, which helps demonstrate that census attributes are being used for business segmentation rather than only as lookup fields
+
 Expected insight themes:
 
 - carrier identity completeness,

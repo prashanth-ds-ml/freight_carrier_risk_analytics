@@ -44,14 +44,10 @@ As of May 19, 2026, all three source listings were marked as last updated on May
 
 ## Current Working Approach
 
-- Raw FMCSA files have been imported into MySQL under `feright_risk_analysis`
-- Current workflow is SQL-first and step-by-step
-- Current completed SQL step: inventory all columns from `raw_company_census`, `raw_crash`, and `raw_vehicle_inspection`
-- Current understanding:
-  - `raw_company_census` is the carrier master table with 147 columns
-  - `raw_crash` is the crash event table with 59 columns
-  - `raw_vehicle_inspection` is the inspection event table with 63 columns
-- Current focus: understand the raw data structure and null patterns before broad cleaning or aggregation
+- Raw FMCSA files were imported into MySQL under `feright_risk_analysis`
+- The project shifted from raw-table exploration to a BI-ready summary-layer design
+- The current reporting layer uses only Power BI-safe `pbi_*` views
+- The dashboard is designed page-by-page with business-focused sources rather than a single overloaded model
 
 ## Current Status Reference
 
@@ -93,29 +89,70 @@ freight_carrier_risk_analytics/
 └── README.md
 ```
 
-## Planned Dashboard Pages
+## Dashboard Pages
 
 1. Carrier Risk Overview
+Source:
+`pbi_carrier_risk_summary`
+
 2. Identity and Authority Exceptions
-3. Inspection and Out-of-Service Risk
-4. Crash History
-5. Data Quality Monitor
+Source:
+`pbi_identity_authority_exceptions`
+
+3. Inspection Risk
+Source:
+`pbi_inspection_risk`
+
+4. Crash Risk
+Source:
+`pbi_crash_risk`
+
+## Live Dashboard
+
+Published Power BI report:
+
+- https://app.fabric.microsoft.com/view?r=eyJrIjoiNTk3ODRjZjItODJkNy00ZDUzLWJjNDktODUyMjY4YmNhMWZmIiwidCI6IjBkNGYwMzExLWYwMmUtNDE2MS05ZTc4LTg3M2ZmYTk5OWIwOCJ9&pageName=1ab999bf3db81567e975
+
+## Published Dashboard Summary
+
+The currently published report contains four pages:
+
+1. `Freight Carrier Risk Analytics` overview page
+2. `Identity and Authority Exceptions`
+3. `Inspection Risk`
+4. `Crash Risk`
+
+The report is built on Power BI-safe MySQL views and focuses on KPI cards, state-level concentration charts, carrier-operation segmentation, and business-facing review tables.
 
 ## Power BI Source Objects
 
 Current recommended MySQL objects for Power BI:
 
-- primary table:
-  - `carrier_risk_summary`
-- supporting summary tables:
-  - `inspection_summary_by_carrier`
-  - `crash_summary_by_carrier`
-- supporting views:
-  - `vw_carrier_profile`
-  - `vw_identity_authority_exceptions`
-  - `vw_inspection_risk`
-  - `vw_crash_risk`
-  - `vw_high_risk_carriers`
+- Power BI-safe views:
+  - `pbi_carrier_risk_summary`
+  - `pbi_carrier_profile`
+  - `pbi_identity_authority_exceptions`
+  - `pbi_inspection_risk`
+  - `pbi_crash_risk`
+  - `pbi_high_risk_carriers`
+
+Internal MySQL build objects that support the reporting layer:
+
+- `inspection_summary_by_carrier`
+- `crash_summary_by_carrier`
+- `carrier_risk_summary`
+
+## Page 1 KPIs
+
+The first dashboard page, `Carrier Risk Overview`, uses these core DAX measures on `pbi_carrier_risk_summary`:
+
+- `Total Carriers`
+- `Active Carriers`
+- `Carriers With Inspections`
+- `Carriers With Crashes`
+- `High-Risk Carriers`
+
+All currently used DAX measures are documented in `powerbi/dax_measures.md`.
 
 ## Key Metrics
 

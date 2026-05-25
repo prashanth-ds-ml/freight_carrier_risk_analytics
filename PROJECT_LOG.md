@@ -26,6 +26,7 @@ Completed:
 - Created `sql/05_analysis_questions.sql` as the first Workbench-safe analysis script built only on the summary layer.
 - Finalized the official 15-question version 1 analysis framework and documented the reasoning.
 - Created Power BI helper views using `sql/06_powerbi_helper_views.sql`.
+- Published the Power BI dashboard and captured the public report link in project documentation.
 - Confirmed summary-layer row counts:
   - `company_census_selected`: 4,437,569
   - `inspection_summary_by_carrier`: 660,563
@@ -68,6 +69,7 @@ Next Action:
 - Refine docs with actual insight outputs and screenshots.
 - Run `sql/05_analysis_questions.sql` and capture the outputs for final insight writing and dashboard design.
 - Connect Power BI to `carrier_risk_summary` and the helper views, then build the first dashboard pages.
+- Add screenshots and final insight summaries based on the published report.
 
 Reference:
 
