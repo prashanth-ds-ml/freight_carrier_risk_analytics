@@ -56,9 +56,11 @@ For detailed supporting documentation, see:
 - `docs/analysis_questions.md`
 - `docs/data_dictionary.md`
 - `docs/data_quality_report.md`
+- `docs/eda_summary.md`
 - `docs/metric_definitions.md`
 - `docs/insights.md`
 - `docs/recommendations.md`
+- `outputs/weekly_review/week_01_summary.md`
 - `powerbi/dax_measures.md`
 
 ## Repository Structure
@@ -160,6 +162,7 @@ All currently used DAX measures are documented in `powerbi/dax_measures.md`.
 - Crash count
 - High-risk carrier count
 - Risk score
+
 
 
 
