@@ -38,15 +38,14 @@ As of May 19, 2026, all three source listings were marked as last updated on May
 ## Tools Used
 
 - SQL: primary analysis workflow for schema inventory, data quality checks, cleaning, KPI calculations, joins, and risk logic
-- Python: EDA, profiling, outlier checks, risk-score exploration
-- Power BI: carrier risk dashboard and DAX measures
-- Excel: exception tracker and weekly review summary
+- Python: import automation, profiling, and MySQL execution support
+- Power BI: dashboarding and DAX measures
 
 ## Current Working Approach
 
 - Raw FMCSA files were imported into MySQL under `feright_risk_analysis`
 - The project shifted from raw-table exploration to a BI-ready summary-layer design
-- The current reporting layer uses only Power BI-safe `pbi_*` views
+- The current reporting layer uses only curated `pbi_*` views
 - The dashboard is designed page-by-page with business-focused sources rather than a single overloaded model
 
 ## Documentation Map
@@ -128,13 +127,13 @@ The currently published report contains four pages:
 3. `Inspection Risk`
 4. `Crash Risk`
 
-The report is built on Power BI-safe MySQL views and focuses on KPI cards, state-level concentration charts, carrier-operation segmentation, and business-facing review tables.
+The report is built on curated MySQL reporting views and focuses on KPI cards, state-level concentration charts, carrier-operation segmentation, and business-facing review tables.
 
 ## Power BI Source Objects
 
 Current recommended MySQL objects for Power BI:
 
-- Power BI-safe views:
+- reporting views:
   - `pbi_carrier_risk_summary`
   - `pbi_carrier_profile`
   - `pbi_identity_authority_exceptions`
